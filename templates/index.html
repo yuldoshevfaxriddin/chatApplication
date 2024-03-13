@@ -15,10 +15,11 @@
 </head>
 
 <body>
+    <div class="container">
 
-    
-    <input type="text" id="username">
-    <div class="messages">
+        
+        <input type="text" id="username" value="{{user}}">
+        <div class="messages">
     </div>
     <input placeholder="Message" id="messageInput" />
 
@@ -47,11 +48,12 @@
             message = JSON.parse(message);
             console.log(message);
             let messageElement = document.createElement("p");
-            messageElement.innerText = 'username: '+message['username']+'>> '+message['message'];
+            messageElement.innerText = message['username']+'>> '+message['message'];
             messageContainer.appendChild(messageElement);
         })
 
-    </script>
+        </script>
+        </div>
 </body>
 
 </html>
