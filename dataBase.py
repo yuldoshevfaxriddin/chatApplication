@@ -64,11 +64,16 @@ def insertUser(name,username,password):
     VALUES ('{name}','{username}','{password}','{datetime.datetime.now()}'); '''
     respons = cursor.execute(INSERT_USER_QUERY)
     conn.commit()
-    return respons
+    return respons.execute(f'SELECT MAX(id) FROM {DB_TABLE_USERS}').fetchone()
 
 def checkUser(username,password):
     SELECT_USER_QUERY = f'''SELECT * FROM {DB_TABLE_USERS} WHERE username='{username}' AND password='{password}';'''
-    respons = cursor.execute(SELECT_USER_QUERY).fetchall()
+    respons = cursor.execute(SELECT_USER_QUERY).fetchone()
+    return respons
+
+def findUser(id):
+    SELECT_USER_QUERY = f'''SELECT * FROM {DB_TABLE_USERS} WHERE id='{id}';'''
+    respons = cursor.execute(SELECT_USER_QUERY).fetchone()
     return respons
 
 # chat qoshish

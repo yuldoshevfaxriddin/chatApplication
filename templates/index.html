@@ -2,58 +2,44 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <script src="{{ url_for('static', filename='js.js') }}"></script>
-    
-    <script src="{{ url_for('static', filename='bootstrapt.js') }}"></script>
-    <script src="{{ url_for('static', filename='popper.js') }}"></script>
-    <link rel="stylesheet" href="{{ url_for('static', filename='bootstrapt.css') }}">
-    <title>Chat application</title>
+    <meta charset="utf-8">
+    <title>Klean - Cleaning Services Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="Free HTML Templates" name="keywords">
+    <meta content="Free HTML Templates" name="description">
+
+    <link href="{{url_for('static',filename='css/style.min.css')}}" rel="stylesheet">
+
 </head>
 
 <body>
-    <div class="container">
+    
+    <!-- Blog Start -->
+    <div class="container-fluid py-5">
+        <div class="container">
 
-        
-        <input type="text" id="username" value="{{user}}">
-        <div class="messages">
-    </div>
-    <input placeholder="Message" id="messageInput" />
-
-    <script>
-        const socket = io();
-        let username = document.getElementById('username');
-        let messageContainer = document.querySelector(".messages");
-        
-        socket.on("connect", () => {
-            let p = document.createElement("p");
-            p.innerText = "You're connected";
-            messageContainer.appendChild(p);
-        })
-        let messsage = '';
-        let messageInput = document.getElementById("messageInput");
-        messageInput.addEventListener("keypress", (e) => {
-            if (e.which === 13) {
-                message = JSON.stringify({'username':username.value,'message':messageInput.value});
-                // message = JSON.stringify({'username':'test','message':messageInput.value});
-                socket.emit("message", message);
-                messageInput.value = "";
-            }
-        })
-
-        socket.on('message', (message) => {
-            message = JSON.parse(message);
-            console.log(message);
-            let messageElement = document.createElement("p");
-            messageElement.innerText = message['username']+'>> '+message['message'];
-            messageContainer.appendChild(messageElement);
-        })
-
-        </script>
+            <div class="row">
+                {% for doctor in doctors %}
+                <div class="col-lg-4 col-md-6 mb-5">
+                    <div class="position-relative mb-4">
+                        <img class="img-fluid rounded w-100" src="{{doctor['image']}}" alt="photo">
+                    </div>
+                    <div class="d-flex mb-2">
+                        <a class="text-secondary text-uppercase font-weight-medium" href="{{doctor['region']}}">{{doctor['region']}}</a>
+                        <span class="text-primary px-2">|</span>
+                        <a class="text-secondary text-uppercase font-weight-medium" href="{{doctor['kasb']}}">{{doctor['kasb']}}</a>
+                    </div>
+                    <h5 class="font-weight-medium mb-2">{{doctor['name']}}</h5>
+                    <p class="mb-4">{{doctor['bio']}}</p>
+                    <a class="btn btn-sm btn-primary py-2" href="{{doctor['page']}}">Shaxsiy sahifa</a>
+                </div>
+                {% endfor %}
+               
+            </div>
         </div>
+    </div>
+    <!-- Blog End -->
+
 </body>
 
 </html>
